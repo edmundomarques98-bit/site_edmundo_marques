@@ -12,7 +12,7 @@ Abra http://localhost:8000. Não há dependências nem etapa de build.
 
 ## Contato
 
-Em `config.js`, preencher `whatsapp` com o número de atendimento no formato `55` + DDD + número. O número não foi informado no briefing inicial. Enquanto vazio, o formulário prepara uma mensagem copiável, sem enviar ou armazenar dados. Com o número válido, aparece o botão que abre o WhatsApp com a mensagem preenchida.
+O WhatsApp de atendimento está configurado em `config.js`: +55 (88) 99624-5526. O formulário prepara a mensagem e oferece um botão para abrir o WhatsApp. O visitante confirma o envio no próprio WhatsApp; o site não envia nem armazena os dados.
 
 ## Publicar no GitHub Pages
 
