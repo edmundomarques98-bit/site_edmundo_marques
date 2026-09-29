@@ -1,12 +1,34 @@
 'use strict';
 const $ = (selector, parent = document) => parent.querySelector(selector);
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Textos entram em sequência quando chegam à área de leitura.
+// Sem JavaScript ou com movimento reduzido, continuam visíveis normalmente.
 if (!reducedMotion && 'IntersectionObserver' in window) {
-  document.body.classList.add('motion-ready');
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-  }), { threshold: 0.06 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  const groups = new Map();
+  const textElements = document.querySelectorAll(
+    '.hero-copy > .eyebrow, .hero-copy > h1, .hero-copy > p, ' +
+    '.section-heading > .eyebrow, .section-heading > h2, .section-heading > p, ' +
+    '.service-card .eyebrow, .service-card h3, .service-card p, .service-card li, ' +
+    '.show-copy > h3, .show-copy > p, .process-grid article > span, ' +
+    '.process-grid h3, .process-grid p, .about > .eyebrow, .about > h2, ' +
+    '.about-copy > p, .together p, .final-cta .eyebrow, .final-cta h2, .final-cta p'
+  );
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('text-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+  textElements.forEach(el => {
+    const group = el.closest('.hero-copy, .section-heading, .service-card, .show-copy, .process-grid article, .about, .together, .final-cta');
+    const position = groups.get(group) || 0;
+    groups.set(group, position + 1);
+    el.style.setProperty('--text-delay', `${Math.min(position, 3) * 75}ms`);
+    el.classList.add('scroll-text');
+    observer.observe(el);
+  });
+  document.body.classList.add('text-motion-ready');
 }
 $('#year').textContent = new Date().getFullYear();
 const menu = $('.menu-toggle');
