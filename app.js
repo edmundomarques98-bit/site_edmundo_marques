@@ -21,12 +21,15 @@ $('#navigation').addEventListener('click', e => { if (e.target.closest('a')) clo
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
 const demoData = {
   bio: {description:'Seus serviços, canais e conteúdos organizados em uma página com a cara da sua marca.', html:'<div class="demo-bio"><img src="assets/logo.png" alt="Edmundo Marques"><p>Design, estratégia e um mundo de ideias.</p><button class="demo-link primary" data-preview-service="Identidade visual">Conheça a identidade visual</button><button class="demo-link" data-preview-service="Site">Encontre o site para você</button><button class="demo-link" data-preview-service="Identidade visual + site">Vamos criar juntos</button><div class="demo-note" role="status">Experimente os botões da prévia.</div></div>'},
-  site: {description:'Uma apresentação completa do seu negócio, com serviços, diferenciais e um caminho simples para o contato.', html:'<div class="demo-site"><img src="assets/logo.png" alt="Edmundo Marques"><h4>Sua história merece<br><span>um lugar no mundo.</span></h4><p>Um espaço para conhecer sua marca, explorar seus serviços e dar o próximo passo.</p><div class="demo-features"><span>SOBRE A MARCA</span><span>SERVIÇOS</span><span>CONTATO</span></div><button class="demo-link primary" data-preview-service="Site">Quero um site profissional</button><div class="demo-note" role="status">Prévia de estrutura para seu negócio.</div></div>'},
-  landing: {description:'Uma página focada em uma oferta: apresentar o serviço, responder dúvidas e incentivar o pedido de orçamento.', html:'<div class="demo-site"><img src="assets/logo.png" alt="Edmundo Marques"><h4>Uma boa oferta.<br><span>Toda a atenção.</span></h4><p>Uma mensagem clara, os detalhes que importam e um próximo passo bem definido.</p><button class="demo-link primary" data-preview-service="Site">Quero minha landing page</button><div class="demo-features"><span>MENSAGEM CLARA</span><span>FOCO NO CONTATO</span></div><div class="demo-note" role="status">Prévia de uma página de campanha.</div></div>'}
+  site: {title:'DEIVID SOUZA PERSONAL', caption:'PROJETO REAL · DEIVID SOUZA PERSONAL', description:'Deivid Souza Personal: um projeto real para apresentar o profissional, seus serviços e os caminhos de contato.', html:'<a class="project-preview" href="https://edmundomarques98-bit.github.io/deivid-souza-personal-v2/" target="_blank" rel="noopener noreferrer"><img src="assets/projeto-deivid.jpg" width="1440" height="1000" alt="Prévia real do site Deivid Souza Personal" loading="lazy"><span>Visitar site do Deivid ↗</span></a>'},
+  landing: {title:'STUDIO ALEX PACHECO', caption:'PROJETO REAL · STUDIO ALEX PACHECO', description:'Studio Alex Pacheco: uma página que apresenta o Studio, sua proposta de treino e os caminhos para conhecer o trabalho e entrar em contato.', html:'<a class="project-preview" href="https://edmundomarques98-bit.github.io/STUDIOALEXPACHECO/" target="_blank" rel="noopener noreferrer"><img src="assets/projeto-studio.jpg" width="1440" height="1000" alt="Prévia real da landing page do Studio Alex Pacheco" loading="lazy"><span>Conhecer o projeto do Studio ↗</span></a>'}
 };
 function setDemo(key) {
   const data = demoData[key];
   $('#preview').innerHTML = data.html;
+  $('#preview').classList.toggle('has-project', key !== 'bio');
+  $('#preview-title').textContent = data.title || 'SEU PRÓXIMO ESPAÇO DIGITAL';
+  $('.preview-caption').textContent = data.caption || 'PRÉVIA ILUSTRATIVA · LINK NA BIO';
   $('#preview').setAttribute('aria-labelledby', 'tab-' + key);
   $('#demo-description').textContent = data.description;
   document.querySelectorAll('[data-demo]').forEach(tab => { const selected = tab.dataset.demo === key; tab.setAttribute('aria-selected', String(selected)); tab.tabIndex = selected ? 0 : -1; });
@@ -42,7 +45,7 @@ document.querySelectorAll('[data-demo]').forEach((tab, index, tabs) => {
     if (next !== undefined) { e.preventDefault(); tabs[next].focus(); setDemo(tabs[next].dataset.demo); }
   });
 });
-setDemo('bio');
+setDemo('site');
 const brief = $('#brief-dialog');
 let previousFocus;
 function openDialog(dialog) { previousFocus = document.activeElement; dialog.showModal(); document.body.classList.add('modal-open'); }
