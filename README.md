@@ -27,3 +27,9 @@ Em Settings > Pages, escolher Deploy from a branch, branch `main`, pasta `/ (roo
 - `assets/`: logo, símbolo e robô. PNGs da marca preservados; mascote otimizado para WebP.
 
 As animações respeitam a preferência de movimento reduzido. O conteúdo principal permanece visível sem JavaScript. Não há analytics, cookies de publicidade, banco de dados ou envio automático de formulários.
+
+## Atualização do portfólio — setembro de 2026
+
+A especificação, fontes de referência, links dos clientes, assets e critérios de aceite estão em [docs/alteracoes-2026-09-29.md](docs/alteracoes-2026-09-29.md).
+
+A fonte autoral EM Corte Display Bold está em `assets/fonts/`, com WOFF2 para web e TTF original. As prévias de Deivid Souza e Studio Alex Pacheco são capturas reais; ao atualizar os projetos, renovar as imagens correspondentes. O mascote com ambas as mãos abertas está em `assets/robo-servicos.png`; a imagem original foi preservada.
