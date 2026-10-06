@@ -64,3 +64,15 @@ h1,h2,h3,.ribbon span{font-family:'EM Corte Display',Arial,Helvetica,sans-serif;
 @keyframes intro-exit{to{opacity:0;visibility:hidden}}
 @media(prefers-reduced-motion:reduce){.intro-car{animation:none}.intro-progress::after{animation:none}#brand-intro{animation:none}}
 @media print{#brand-intro{display:none!important}html.intro-active #site-content{visibility:visible}}
+
+/* Assinatura e símbolo em contorno neon, integrados ao fundo escuro. */
+.brand{background:transparent;padding:0;width:150px}
+.brand img{width:150px}
+.tiny-mark{background:transparent;padding:0;width:44px}
+.tiny-mark img{width:100%}
+.mark-box{background:transparent;padding:0;width:72px;height:52px}
+.mark-box img{width:62px;max-height:100%}
+.together>img{background:transparent;padding:0;width:48px}
+.about-copy>img{background:transparent;padding:0;width:145px}
+.ribbon img{filter:brightness(0) invert(1) drop-shadow(0 0 4px #fff)}
+@media(max-width:760px){.brand{width:118px;padding:0}.brand img{width:118px}.tiny-mark{width:34px;padding:0}}
