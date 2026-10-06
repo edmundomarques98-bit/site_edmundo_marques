@@ -75,5 +75,6 @@ h1,h2,h3,.ribbon span{font-family:'EM Corte Display',Arial,Helvetica,sans-serif;
 .web-card .mark-box img{filter:brightness(0) invert(1) drop-shadow(0 0 5px #fff)}
 .together>img{background:transparent;padding:0;width:48px}
 .about-copy>img{background:transparent;padding:0;width:145px}
+.footer-top>a:first-child{background:transparent;padding:0}
 .ribbon img{filter:brightness(0) invert(1) drop-shadow(0 0 4px #fff)}
 @media(max-width:760px){.brand{width:118px;padding:0}.brand img{width:118px}.tiny-mark{width:34px;padding:0}}
