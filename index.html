@@ -5,9 +5,42 @@
 <title>Edmundo Marques — Identidade visual & Sites</title>
 <meta name="description" content="Identidade visual com estratégia e sites que apresentam o valor do seu negócio. Criação de marcas, redesign, páginas para Instagram e sites profissionais com Edmundo Marques.">
 <meta name="theme-color" content="#0000ff"><meta property="og:title" content="Edmundo Marques — Sua marca em outro nível."><meta property="og:description" content="Identidade visual e sites. Da primeira impressão ao próximo clique."><meta property="og:type" content="website">
-<link rel="icon" href="assets/simbolo.png" type="image/png"><link rel="preload" as="image" href="assets/robo-servicos.png"><link rel="preload" as="font" type="font/woff2" href="assets/fonts/EM-Corte-Display-Bold.woff2" crossorigin><link rel="stylesheet" href="styles.css?v=nutrimax-20261006"><script src="config.js?v=2" defer></script><script src="app.js?v=nutrimax-20261006" defer></script>
+<link rel="icon" href="assets/simbolo.png" type="image/png"><link rel="preload" as="image" href="assets/robo-servicos.png"><link rel="preload" as="font" type="font/woff2" href="assets/fonts/EM-Corte-Display-Bold.woff2" crossorigin><link rel="stylesheet" href="styles.css?v=intro-20261006"><script src="config.js?v=2" defer></script><script src="app.js?v=intro-20261006" defer></script>
+<link rel="preload" as="image" href="assets/simbolo-abertura.png" fetchpriority="high">
+<style>
+#brand-intro{display:none}
+html.intro-active{overflow:hidden}
+html.intro-active body{overflow:hidden}
+html.intro-active #site-content{visibility:hidden}
+html.intro-active #brand-intro{display:grid}
+</style>
+<script>
+// Progressive enhancement: sem JavaScript, o conteúdo permanece acessível.
+document.documentElement.classList.add('intro-active');
+window.brandIntroDeadline = performance.now() + 3000;
+window.finishBrandIntro = function () {
+  document.documentElement.classList.remove('intro-active');
+  var content = document.getElementById('site-content');
+  if (content) { content.inert = false; content.removeAttribute('aria-hidden'); }
+  var intro = document.getElementById('brand-intro');
+  if (intro) intro.remove();
+  document.dispatchEvent(new Event('brandintroend'));
+};
+// Independente de imagens, scripts externos e do carregamento completo da página.
+setTimeout(window.finishBrandIntro, 3000);
+window.addEventListener('pageshow', function (event) { if (event.persisted) window.finishBrandIntro(); });
+</script>
 </head>
 <body>
+<div id="brand-intro" role="status" aria-label="Abrindo o site de Edmundo Marques">
+  <div class="intro-composition" aria-hidden="true">
+    <div class="intro-treadmill"><div class="intro-arm"><img src="assets/simbolo-abertura.png" width="2048" height="1145" alt="" fetchpriority="high" decoding="sync"></div></div>
+    <span class="intro-name">EDMUNDO MARQUES</span>
+    <span class="intro-tagline">DESIGN COM INTENÇÃO.</span>
+    <span class="intro-progress"></span>
+  </div>
+</div>
+<div id="site-content">
 <a href="#conteudo" class="skip">Pular para o conteúdo</a>
 <header class="header"><a class="brand" href="#inicio" aria-label="Edmundo Marques — início"><img src="assets/logo.png" width="2048" height="871" alt="Edmundo Marques"></a><nav aria-label="Navegação principal" id="navigation"><a href="#servicos">O que eu crio</a><a href="#universo">Na prática</a><a href="#processo">Como funciona</a></nav><button class="button small header-cta" data-brief="Ainda não sei">Vamos conversar</button><button class="menu-toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="navigation"><span></span><span></span></button></header>
 <main id="conteudo">
@@ -45,4 +78,11 @@
 <dialog id="brief-dialog" aria-labelledby="brief-title"><button class="close-dialog" aria-label="Fechar">×</button><div id="brief-form-view"><span class="eyebrow">VAMOS DAR O PRIMEIRO PASSO</span><h2 id="brief-title">Qual é a sua ideia?</h2><p>Organize o que você precisa para iniciar a conversa.</p><form id="brief-form"><label for="service">O que você quer criar?</label><select id="service" name="service"><option>Identidade visual</option><option>Site</option><option>Identidade visual + site</option><option>Ainda não sei</option></select><label for="client-name">Seu nome</label><input id="client-name" name="name" autocomplete="given-name" required maxlength="80" placeholder="Como posso chamar você?"><label for="business">Nome do seu negócio</label><input id="business" name="business" autocomplete="organization" maxlength="100" placeholder="Se ainda não tem nome, tudo bem"><label for="idea">Conte um pouco sobre o projeto</label><textarea id="idea" name="idea" rows="3" required maxlength="1800" placeholder="O que você faz e o que gostaria de transformar?"></textarea><p class="form-note">Seus dados ficam apenas nesta página até você decidir compartilhar.</p><button class="button" type="submit" id="brief-submit">Preparar minha mensagem</button></form></div><div id="brief-result" hidden><span class="eyebrow">SEU PROJETO COMEÇA AQUI</span><h2>Mensagem pronta.</h2><p id="result-description">Copie o resumo e envie ao Edmundo pelo seu canal de contato.</p><textarea id="brief-message" rows="8" readonly aria-label="Resumo do projeto"></textarea><a id="whatsapp-link" class="button" target="_blank" rel="noopener noreferrer" hidden>Abrir no WhatsApp</a><button class="button" id="copy-message">Copiar mensagem</button><button class="text-button" id="edit-message">Editar informações</button><p role="status" id="copy-status"></p></div></dialog>
 <dialog id="privacy-dialog" aria-labelledby="privacy-title"><button class="close-dialog" aria-label="Fechar">×</button><h2 id="privacy-title">Sua privacidade</h2><p>Este site não utiliza ferramentas de análise nem cookies de publicidade. As informações preenchidas no briefing são processadas no seu navegador e não são armazenadas por este site.</p><p>Ao copiar ou compartilhar a mensagem em outro serviço, passam a valer as condições desse serviço. A hospedagem pode registrar dados técnicos de acesso para manter o site funcionando.</p></dialog>
 <dialog id="case-dialog" aria-labelledby="case-dialog-title"><button class="close-dialog" aria-label="Fechar apresentação">×</button><h2 id="case-dialog-title">Nutrimax — Evolução da identidade visual</h2><img id="case-dialog-image" src="assets/nutrimax-case-1.webp" width="1536" height="2048" alt="" loading="lazy"><div class="case-dialog-nav"><button type="button" id="case-previous">Anterior</button><span id="case-dialog-count" aria-live="polite">1 de 5</span><button type="button" id="case-next">Próxima</button></div></dialog>
+</div>
+<script>
+if (document.documentElement.classList.contains('intro-active')) {
+  document.getElementById('site-content').inert = true;
+  document.getElementById('site-content').setAttribute('aria-hidden', 'true');
+}
+</script>
 </body></html>

@@ -3,6 +3,7 @@ const $ = (selector, parent = document) => parent.querySelector(selector);
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // Textos entram em sequência quando chegam à área de leitura.
 // Sem JavaScript ou com movimento reduzido, continuam visíveis normalmente.
+function initTextMotion() {
 if (!reducedMotion && 'IntersectionObserver' in window) {
   const groups = new Map();
   const textElements = document.querySelectorAll(
@@ -30,6 +31,10 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
   });
   document.body.classList.add('text-motion-ready');
 }
+}
+if (document.documentElement.classList.contains('intro-active')) {
+  document.addEventListener('brandintroend', initTextMotion, { once: true });
+} else { initTextMotion(); }
 $('#year').textContent = new Date().getFullYear();
 const menu = $('.menu-toggle');
 menu.addEventListener('click', () => {
