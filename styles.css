@@ -26,3 +26,24 @@ h1,h2,h3,.ribbon span{font-family:'EM Corte Display',Arial,Helvetica,sans-serif;
 @media(max-width:760px){.text-motion-ready .scroll-text{transform:translateY(18px)}.text-motion-ready h1.scroll-text,.text-motion-ready h2.scroll-text,.text-motion-ready h3.scroll-text{transform:translateY(26px)}.text-motion-ready .scroll-text.text-visible{transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){.text-motion-ready .scroll-text{opacity:1;transform:none!important;transition:none!important}}
 @media print{.text-motion-ready .scroll-text{opacity:1;transform:none!important}}
+
+/* Case Nutrimax: pranchas completas, sem cortes e com ampliação. */
+.nutrimax-case{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.case-gallery{width:100%;max-width:480px;margin-inline:auto;min-width:0}
+.case-image-link{display:block;position:relative;background:#050807;border:1px solid #343b35;border-radius:12px;overflow:hidden}
+.case-image-link>img{width:100%;height:auto;aspect-ratio:3/4;object-fit:contain}
+.case-image-link>span{position:absolute;right:12px;bottom:12px;border:1px solid #b3b3cc;background:#09090deb;padding:7px 12px;border-radius:5px;font-size:12px;color:white}
+.case-image-link:hover>span{background:var(--blue)}
+.case-thumbs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px;margin-top:13px}
+.case-thumb{background:#0c0e0c;border:2px solid #343442;border-radius:6px;padding:3px;overflow:hidden;transition:border-color .2s}
+.case-thumb img{width:100%;height:auto;aspect-ratio:3/4;object-fit:contain;border-radius:2px}
+.case-thumb:hover,.case-thumb[aria-pressed="true"]{border-color:#a5e800}
+.case-caption{font-size:14px;color:#bcbccc;margin-top:12px;text-align:center;line-height:1.4}
+#case-dialog{max-width:900px;padding:24px;overscroll-behavior:contain}
+#case-dialog h2{font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:1.35;letter-spacing:0;margin:0 40px 18px 0}
+#case-dialog-image{width:100%;height:auto;border-radius:5px}
+.case-dialog-nav{position:sticky;bottom:-24px;display:flex;justify-content:space-between;align-items:center;gap:15px;background:#15151ef5;padding:16px 0;margin-top:12px}
+.case-dialog-nav button{background:#222233;border:1px solid #64647b;border-radius:5px;padding:10px 16px;font-size:14px}
+.case-dialog-nav button:hover{background:var(--blue)}
+.case-dialog-nav span{font-size:14px;color:#c6c6db}
+@media(max-width:760px){.nutrimax-case{grid-template-columns:minmax(0,1fr)}.case-gallery{max-width:420px}.case-thumbs{gap:6px}#case-dialog{padding:18px}.case-dialog-nav{bottom:-18px}.case-image-link>span{font-size:11px;padding:6px 9px}}

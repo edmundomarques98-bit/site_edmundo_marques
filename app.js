@@ -103,3 +103,33 @@ $('#copy-message').addEventListener('click', async () => {
   catch { $('#brief-message').focus(); $('#brief-message').select(); $('#copy-status').textContent = 'Selecione e copie a mensagem acima.'; }
 });
 $('#edit-message').addEventListener('click', () => { $('#brief-form-view').hidden = false; $('#brief-result').hidden = true; $('#service').focus(); });
+
+// Apresentação do case Nutrimax: seleção manual e leitura ampliada.
+const caseSlides = [
+  ['Evolução da identidade visual', 'Evolução da identidade visual Nutrimax: comparação entre a marca anterior e o novo símbolo de atleta integrado a um escudo.'],
+  ['O ponto de partida', 'Diagnóstico da identidade anterior da Nutrimax e os objetivos de diferenciação e posicionamento.'],
+  ['Objetivo do redesign', 'Objetivos do redesign Nutrimax: reconhecimento, performance, percepção premium e comunidade.'],
+  ['Variações da nova marca', 'Variações da nova marca Nutrimax em fundos preto, azul e verde-limão, com símbolo, tipografia e paleta.'],
+  ['Resultado', 'Resultado do redesign Nutrimax: nova marca alinhada ao universo de performance e comunidade.']
+];
+let currentCaseSlide = 0;
+const caseDialog = $('#case-dialog');
+function setCaseSlide(index) {
+  currentCaseSlide = (index + caseSlides.length) % caseSlides.length;
+  const [title, alt] = caseSlides[currentCaseSlide];
+  const src = `assets/nutrimax-case-${currentCaseSlide + 1}.webp`;
+  ['#case-image', '#case-dialog-image'].forEach(selector => { $(selector).src = src; $(selector).alt = alt; });
+  $('#case-expand').href = src;
+  $('#case-caption').textContent = title;
+  $('#case-dialog-title').textContent = 'Nutrimax — ' + title;
+  $('#case-dialog-count').textContent = `${currentCaseSlide + 1} de ${caseSlides.length}`;
+  document.querySelectorAll('[data-case-slide]').forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.caseSlide) === currentCaseSlide)));
+}
+document.querySelectorAll('[data-case-slide]').forEach(button => button.addEventListener('click', () => setCaseSlide(Number(button.dataset.caseSlide))));
+$('#case-expand').addEventListener('click', event => { event.preventDefault(); setCaseSlide(currentCaseSlide); openDialog(caseDialog); });
+function stepCase(direction) { setCaseSlide(currentCaseSlide + direction); caseDialog.scrollTop = 0; }
+$('#case-previous').addEventListener('click', () => stepCase(-1));
+$('#case-next').addEventListener('click', () => stepCase(1));
+caseDialog.addEventListener('keydown', event => {
+  if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); stepCase(event.key === 'ArrowLeft' ? -1 : 1); }
+});
