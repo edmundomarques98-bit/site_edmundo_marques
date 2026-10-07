@@ -78,3 +78,5 @@ h1,h2,h3,.ribbon span{font-family:'EM Corte Display',Arial,Helvetica,sans-serif;
 .footer-top>a:first-child{background:transparent;padding:0}
 .ribbon img{filter:brightness(0) invert(1) drop-shadow(0 0 4px #fff)}
 @media(max-width:760px){.brand{width:118px;padding:0}.brand img{width:118px}.tiny-mark{width:34px;padding:0}}
+
+.honeypot{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important}#form-status:not(:empty){margin:14px 0 0;color:#b6b6ff;font-size:12px}.button:disabled{opacity:.6;transform:none;box-shadow:none}
