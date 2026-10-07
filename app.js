@@ -78,7 +78,7 @@ let previousFocus;
 function openDialog(dialog) { previousFocus = document.activeElement; dialog.showModal(); document.body.classList.add('modal-open'); }
 function openBrief(service) {
   $('#service').value = service; $('#brief-form-view').hidden = false; $('#brief-result').hidden = true;
-  $('#copy-status').textContent = ''; $('#form-status').textContent = ''; closeMenu(); openDialog(brief);
+  $('#copy-status').textContent = ''; closeMenu(); openDialog(brief);
 }
 document.querySelectorAll('[data-brief]').forEach(button => button.addEventListener('click', () => openBrief(button.dataset.brief)));
 $('#preview').addEventListener('click', e => { const button = e.target.closest('[data-preview-service]'); if (button) openBrief(button.dataset.previewService); });
@@ -88,40 +88,18 @@ document.querySelectorAll('dialog').forEach(dialog => {
   dialog.addEventListener('close', () => { document.body.classList.remove('modal-open'); if (previousFocus) previousFocus.focus(); });
 });
 $('#privacy-button').addEventListener('click', () => openDialog($('#privacy-dialog')));
-$('#brief-form').addEventListener('submit', async e => {
+$('#brief-form').addEventListener('submit', e => {
   e.preventDefault();
-  if ($('#brief-submit').disabled) return;
-  const name = $('#client-name').value.trim(), email = $('#client-email').value.trim(), idea = $('#idea').value.trim();
-  if (!name || !email || !idea) { (!name ? $('#client-name') : !email ? $('#client-email') : $('#idea')).focus(); return; }
+  const name = $('#client-name').value.trim(), idea = $('#idea').value.trim();
+  if (!name || !idea) { (!name ? $('#client-name') : $('#idea')).focus(); return; }
   const business = $('#business').value.trim();
-  const message = `Olá, Edmundo! Meu nome é ${name}.\nMeu e-mail para resposta: ${email}.\n\nTenho interesse em: ${$('#service').value}.${business ? `\nMeu negócio: ${business}.` : ''}\n\nMinha ideia:\n${idea}\n\nPodemos conversar sobre o projeto?`;
+  const message = `Olá, Edmundo! Meu nome é ${name}.\n\nTenho interesse em: ${$('#service').value}.${business ? `\nMeu negócio: ${business}.` : ''}\n\nMinha ideia:\n${idea}\n\nPodemos conversar sobre o projeto?`;
   $('#brief-message').value = message;
   const phone = String(window.SITE_CONFIG?.whatsapp || '').replace(/\D/g, '');
   const hasPhone = /^55\d{10,11}$/.test(phone);
   $('#whatsapp-link').hidden = !hasPhone;
   if (hasPhone) $('#whatsapp-link').href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-  const submit = $('#brief-submit');
-  submit.disabled = true;
-  submit.textContent = 'Enviando por e-mail…';
-  $('#form-status').textContent = 'Enviando suas informações por e-mail.';
-  let emailAccepted = false;
-  try {
-    const response = await fetch('https://formsubmit.co/ajax/edmundomarques98@gmail.com', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ name, email, _replyto: email, service: $('#service').value, business: business || 'Não informado', message: idea, _subject: 'Novo contato pelo site de Edmundo Marques', _honey: $('#brief-honey').value })
-    });
-    if (!response.ok) throw new Error('Falha no envio');
-    const result = await response.json();
-    emailAccepted = result.success === true || result.success === 'true';
-  } catch { /* O visitante ainda pode usar o WhatsApp se o e-mail falhar. */ }
-  submit.disabled = false;
-  submit.textContent = 'Enviar mensagem';
-  $('#form-status').textContent = '';
-  $('#result-title').textContent = emailAccepted ? 'Mensagem enviada por e-mail.' : 'Não foi possível enviar o e-mail.';
-  $('#result-description').textContent = emailAccepted
-    ? (hasPhone ? 'Agora abra o WhatsApp, confira o resumo e toque em enviar para conversar também por lá.' : 'Seu briefing foi encaminhado por e-mail. Você também pode copiar o resumo abaixo.')
-    : (hasPhone ? 'O envio por e-mail falhou. Você pode mandar o resumo pelo WhatsApp e tentar novamente depois.' : 'O envio por e-mail falhou. Volte ao formulário e tente novamente.');
+  $('#result-description').textContent = hasPhone ? 'Abra o WhatsApp, confira a mensagem e envie quando estiver pronto.' : 'Copie o resumo e envie ao Edmundo pelo seu canal de contato. A mensagem ainda não foi enviada.';
   $('#brief-form-view').hidden = true; $('#brief-result').hidden = false;
   $('#copy-status').textContent = ''; brief.scrollTop = 0; $('#copy-message').focus();
 });
