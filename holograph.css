@@ -1,0 +1,27 @@
+/* Fundo holográfico: camada decorativa, sem capturar cliques ou foco. */
+:root{--bg:#040713;--surface:#0c1121}
+body{background:var(--bg);isolation:isolate}
+.world-backdrop{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;contain:strict;background:radial-gradient(ellipse at 84% 44%,#0000ff12,transparent 68%),#040713}
+.world-backdrop::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#040713eb 0%,#040713a6 35%,#04071322 72%),linear-gradient(0deg,#040713a1,transparent 38%,#04071344)}
+.world-sphere{position:absolute;width:min(94vw,1120px);aspect-ratio:1;right:-10vw;top:50%;transform:translateY(-50%);opacity:.29}
+.world-globe{width:100%;height:100%;object-fit:contain;animation:world-float 24s ease-in-out infinite;will-change:transform}
+.world-orbit{position:absolute;inset:9%;border:1px solid #647aff55;border-radius:50%;transform:rotate(-27deg) scaleY(.48);box-shadow:0 0 12px #0000ff24}
+.world-orbit-two{inset:3%;transform:rotate(53deg) scaleY(.44);border-color:#5a68ff30}
+.world-orbit-three{inset:16%;transform:rotate(-65deg) scaleY(.62);border-color:#5368ff30}
+.world-traveler{position:absolute;inset:-2px;border-radius:50%;animation:world-travel 18s linear infinite;will-change:transform}
+.world-traveler::before{content:'';position:absolute;left:50%;top:-3px;width:7px;height:7px;border-radius:50%;background:#a8bdff;box-shadow:0 0 8px #a8bdff,0 0 24px #0000ff}
+.world-orbit-two .world-traveler{animation-duration:27s;animation-direction:reverse}
+.world-orbit-three .world-traveler{animation-duration:33s;animation-delay:-9s}
+.world-halo{position:absolute;inset:14%;border-radius:50%;border:1px solid #566aff70;box-shadow:0 0 22px #0000ff30;animation:world-pulse 9s ease-out infinite}
+#site-content{position:relative;z-index:1}
+.header{background:#040713e8}
+.showcase{background:#080d19e6;border-color:#253155}
+.service-card:not(.web-card){background:#0c1121f2}
+.about{background:radial-gradient(ellipse at top left,#111147a6,transparent 65%),#080d19d9}
+.hero-art .orbit{border-color:#4258b04d}
+@keyframes world-float{0%,100%{transform:translate3d(0,-7px,0) rotate(-2deg)}50%{transform:translate3d(-15px,10px,0) rotate(2deg)}}
+@keyframes world-travel{to{transform:rotate(360deg)}}
+@keyframes world-pulse{0%{transform:scale(.92);opacity:0}18%{opacity:.48}100%{transform:scale(1.24);opacity:0}}
+@media(max-width:760px){.world-sphere{width:140vw;right:-55vw;opacity:.20}.world-backdrop::after{background:linear-gradient(90deg,#040713bb,#0407135c),linear-gradient(0deg,#04071388,transparent)}.world-orbit-three,.world-halo{display:none}.world-globe{animation-duration:32s}}
+@media(prefers-reduced-motion:reduce){.world-backdrop *{animation:none!important;will-change:auto}.world-globe{transform:none}.world-traveler{display:none}}
+@media print{.world-backdrop{display:none}}
