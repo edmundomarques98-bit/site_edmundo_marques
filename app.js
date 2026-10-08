@@ -91,7 +91,11 @@ $('#privacy-button').addEventListener('click', () => openDialog($('#privacy-dial
 $('#brief-form').addEventListener('submit', e => {
   e.preventDefault();
   const name = $('#client-name').value.trim(), idea = $('#idea').value.trim();
-  if (!name || !idea) { (!name ? $('#client-name') : $('#idea')).focus(); return; }
+  if (!name || !idea) {
+    const field = !name ? $('#client-name') : $('#idea');
+    field.setCustomValidity('Preencha este campo com mais do que espaços.');
+    field.reportValidity(); field.focus(); return;
+  }
   const business = $('#business').value.trim();
   const message = `Olá, Edmundo! Meu nome é ${name}.\n\nTenho interesse em: ${$('#service').value}.${business ? `\nMeu negócio: ${business}.` : ''}\n\nMinha ideia:\n${idea}\n\nPodemos conversar sobre o projeto?`;
   $('#brief-message').value = message;
@@ -103,6 +107,9 @@ $('#brief-form').addEventListener('submit', e => {
   $('#brief-form-view').hidden = true; $('#brief-result').hidden = false;
   $('#copy-status').textContent = ''; brief.scrollTop = 0; $('#copy-message').focus();
 });
+// O envio nativo nunca navega nem inclui dados na URL; habilita após registrar o tratamento.
+$('#brief-submit').disabled = false;
+['#client-name', '#idea'].forEach(selector => $(selector).addEventListener('input', () => $(selector).setCustomValidity('')));
 $('#copy-message').addEventListener('click', async () => {
   try { await navigator.clipboard.writeText($('#brief-message').value); $('#copy-status').textContent = 'Mensagem copiada. Agora é só compartilhar com o Edmundo.'; }
   catch { $('#brief-message').focus(); $('#brief-message').select(); $('#copy-status').textContent = 'Selecione e copie a mensagem acima.'; }
@@ -138,3 +145,4 @@ $('#case-next').addEventListener('click', () => stepCase(1));
 caseDialog.addEventListener('keydown', event => {
   if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') { event.preventDefault(); stepCase(event.key === 'ArrowLeft' ? -1 : 1); }
 });
+
