@@ -23,14 +23,46 @@
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   // Paradas pelo site: a seção que ativa, o conteúdo que ele aponta e o que ele diz.
+  // Falas no estilo AIDA: chama a atenção pela dor, mostra o benefício e convida à ação.
   const GUIDES = [
-    { section: '#servicos', target: '.service-grid', say: 'Aqui está o que o Edmundo cria: identidade visual e sites.' },
-    { section: '#case-nutrimax', target: '.case-gallery', say: 'Olha esse case da Nutrimax! Clique nas pranchas para ver.' },
-    { section: '.web-show', target: '#preview', say: 'Esses são sites reais. Troque as abas para conhecer.' },
-    { section: '#processo', target: '.process-grid', say: 'É assim que o projeto acontece, passo a passo.' },
-    { section: '.about', target: '.about h2', say: 'Esse é o Edmundo, o criador por trás de tudo isso.' },
-    { section: '.faq', target: '.faq-list', say: 'Ficou alguma dúvida? Abre uma pergunta aqui.' },
-    { section: '#contato', target: '#contato .button', say: 'Bora começar? É só clicar no botão!', mood: 'jump' }
+    { section: '#identidade', target: '#identidade', say: [
+      'Sua marca parece menor do que o trabalho que você entrega?',
+      'Uma identidade profissional faz o cliente confiar em você antes mesmo da primeira conversa.',
+      'Clique em "Quero transformar minha marca" e vamos começar.'
+    ] },
+    { section: '#sites', target: '#sites', say: [
+      'Seu Instagram não está levando os clientes até você?',
+      'Um site organiza seus serviços e leva quem te segue direto para o seu WhatsApp.',
+      'Clique em "Quero meu espaço digital". O link certo muda o jogo.'
+    ] },
+    { section: '#case-nutrimax', target: '.case-gallery', say: [
+      'A Nutrimax se perdia no meio de tantas marcas parecidas.',
+      'Com o redesign, virou uma marca forte, premium e fácil de reconhecer.',
+      'Veja as pranchas. A próxima transformação pode ser a sua.'
+    ] },
+    { section: '.web-show', target: '#preview', say: [
+      'Ter só o perfil é depender do algoritmo para ser encontrado.',
+      'Esses sites reais apresentam o profissional e abrem caminho para a conversa.',
+      'Troque as abas e imagine o seu negócio aqui.'
+    ] },
+    { section: '#processo', target: '.process-grid', say: [
+      'Medo de investir e o resultado não ter a sua cara?',
+      'Aqui tudo começa ouvindo você, e cada etapa é alinhada antes de seguir.',
+      'Você acompanha o projeto do começo ao fim, sem surpresas.'
+    ] },
+    { section: '.about', target: '.about h2', say: [
+      'Cansado de ser só mais um cliente numa fila de agência?',
+      'Com o Edmundo, você fala direto com quem cria a sua marca.'
+    ] },
+    { section: '.faq', target: '.faq-list', say: [
+      'Ainda com alguma dúvida? Normal antes de investir.',
+      'Aqui estão as respostas mais pedidas. Se faltar alguma, é só perguntar.'
+    ] },
+    { section: '#contato', target: '#contato .button', mood: 'jump', say: [
+      'Cada dia com uma marca fraca é um cliente indo para o concorrente.',
+      'Conte sua ideia em poucos minutos e fale direto com o Edmundo no WhatsApp.',
+      'Clique em "Começar meu projeto". Eu te acompanho!'
+    ] }
   ];
   const CLICK_LINES = [
     'Oi! Eu sou o Mundo, o mascote do Edmundo.',
@@ -48,7 +80,8 @@
   let root, sprite, bubble, callButton;
   let state = 'idle', frame = 0, playsLeft = 0, lastTick = 0, onDone = null, frozen = null;
   let x = 0, moving = false, arriveTimer = 0, talkTimer = 0, idleTimer = 0, lookTimer = 0;
-  let activeGuide = null, guideTimer = 0;
+  let activeGuide = null, guideTimer = 0, busyUntil = 0;
+  const visible = new Map();
   const seen = new Set();
   let inDialog = false, dialogEl = null;
 
@@ -97,13 +130,22 @@
     showFrame(def.row, frame);
   }
 
+  // Uma fala ou uma sequência de falas; uma nova fala interrompe a anterior.
   function say(text, ms) {
     clearTimeout(talkTimer);
-    bubble.textContent = text;
-    // No formulário o balão abre para fora da janela, sem cobrir os campos.
-    root.classList.toggle('bubble-right', !inDialog && x + width() / 2 < window.innerWidth / 2);
-    root.classList.add('is-talking');
-    talkTimer = setTimeout(() => root.classList.remove('is-talking'), ms || 4800);
+    const lines = Array.isArray(text) ? text : [text];
+    const next = index => {
+      bubble.textContent = lines[index];
+      // No formulário o balão abre para fora da janela, sem cobrir os campos.
+      root.classList.toggle('bubble-right', !inDialog && x + width() / 2 < window.innerWidth / 2);
+      root.classList.add('is-talking');
+      const duration = ms || Math.max(3600, 1800 + lines[index].length * 45);
+      talkTimer = setTimeout(() => {
+        if (index + 1 < lines.length) next(index + 1);
+        else root.classList.remove('is-talking');
+      }, duration);
+    };
+    next(0);
   }
 
   function setX(value, duration) {
@@ -145,28 +187,43 @@
     return r.left + 24;
   }
 
+  function speechTime(lines) { return lines.reduce((total, line) => total + Math.max(3600, 1800 + line.length * 45), 0); }
+
   function guide(item) {
     const target = document.querySelector(item.target) || document.querySelector(item.section);
     if (!target) return;
+    activeGuide = item;
     runTo(spotFor(target), () => {
       play(item.mood === 'jump' ? 'jump' : 'wave', () => { play('idle'); lookAtElement(target); clearTimeout(lookTimer); lookTimer = setTimeout(() => { frozen = null; }, 2600); });
       say(item.say);
+      busyUntil = performance.now() + speechTime(item.say);
+      clearTimeout(guideTimer);
+      guideTimer = setTimeout(pickNext, speechTime(item.say) + 400);
     });
+  }
+
+  // Próxima parada: a seção ainda não comentada mais visível. Se a seção atual
+  // continua na tela, ele termina de falar antes; se a pessoa rolou, ele vai junto.
+  function pickNext() {
+    clearTimeout(guideTimer);
+    if (inDialog || root.hidden) return;
+    let best = null, ratio = 0;
+    GUIDES.forEach(item => { const v = visible.get(item.el) || 0; if (!seen.has(item) && v > ratio) { ratio = v; best = item; } });
+    if (!best) return;
+    const currentVisible = activeGuide && (visible.get(activeGuide.el) || 0) > 0;
+    const wait = currentVisible ? Math.max(700, busyUntil - performance.now()) : 700;
+    // Espera a rolagem assentar antes de correr até lá.
+    guideTimer = setTimeout(() => {
+      if (inDialog || root.hidden || seen.has(best) || !(visible.get(best.el) > 0)) return pickNext();
+      seen.add(best); guide(best);
+    }, wait);
   }
 
   function watchSections() {
     if (!('IntersectionObserver' in window)) return;
-    const visible = new Map();
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => visible.set(entry.target, entry.isIntersecting ? entry.intersectionRatio : 0));
-      let best = null, ratio = 0;
-      GUIDES.forEach(item => { const el = item.el; const v = visible.get(el) || 0; if (v > ratio) { ratio = v; best = item; } });
-      if (best === activeGuide) return;
-      activeGuide = best;
-      clearTimeout(guideTimer);
-      if (!best || seen.has(best)) return;
-      // Espera a rolagem assentar antes de correr até lá.
-      guideTimer = setTimeout(() => { if (activeGuide === best && !inDialog && !root.hidden) { seen.add(best); guide(best); } }, 700);
+      pickNext();
     }, { threshold: [0, 0.25, 0.5] });
     GUIDES.forEach(item => { item.el = document.querySelector(item.section); if (item.el) observer.observe(item.el); });
   }
@@ -190,7 +247,7 @@
     dialog.appendChild(root);
     placeInDialog();
     play('wave');
-    say('Vamos lá! Me conta sua ideia que eu te ajudo.', 4200);
+    say('Ótimo passo! Em poucos minutos sua ideia vira conversa.', 4200);
   }
   function leaveDialog() {
     if (!inDialog) return;
@@ -200,6 +257,7 @@
     document.body.appendChild(root);
     setX(home(), 0);
     play('idle');
+    pickNext();
   }
   function watchBrief() {
     const dialog = document.getElementById('brief-dialog');
@@ -302,7 +360,7 @@
       setX(window.innerWidth + 20, 0);
       requestAnimationFrame(() => requestAnimationFrame(() => runTo(home(), () => {
         play('wave');
-        say('Oi! Eu sou o Mundo. Vou te acompanhar por aqui.', 5200);
+        say(['Oi! Eu sou o Mundo. Vou te acompanhar por aqui.', 'Sua marca merece ser lembrada, não só vista. Vem comigo!']);
       })));
     };
     img.src = SPRITE;
