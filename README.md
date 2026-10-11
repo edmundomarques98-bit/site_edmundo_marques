@@ -24,6 +24,7 @@ Em Settings > Pages, escolher Deploy from a branch, branch `main`, pasta `/ (roo
 - `styles.css`: identidade visual, responsividade e movimento.
 - `app.js`: menu, prévias de site, briefing, cópia e modais.
 - `config.js`: contato.
+- `mundo.js` e `mundo.css`: o Mundo, mascote acompanhante. Corre até cada seção, olha para o conteúdo, comenta, segue o cursor e acompanha o briefing. A folha de sprites (8 × 11 quadros de 192 × 208) está em `assets/mundo-sprites.webp`. O visitante pode esconder o mascote; a escolha fica salva no navegador.
 - `assets/`: logo, símbolo e robô. PNGs da marca preservados; mascote otimizado para WebP.
 
 As animações respeitam a preferência de movimento reduzido. O conteúdo principal permanece visível sem JavaScript. Não há analytics, cookies de publicidade, banco de dados ou envio automático de formulários.

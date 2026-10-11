@@ -1,0 +1,21 @@
+/* Mundo: mascote acompanhante. Criado por mundo.js; sem JavaScript, nada aparece. */
+.mundo{--mundo-w:118px;--mundo-h:calc(var(--mundo-w) * 208 / 192);position:fixed;left:0;bottom:10px;z-index:90;width:var(--mundo-w);height:var(--mundo-h);transform:translate3d(var(--mundo-x,110vw),0,0);transition-property:transform;transition-timing-function:linear;pointer-events:none;opacity:0}
+.mundo.is-ready{opacity:1}
+.mundo-sprite{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;border-radius:40%;background:url(assets/mundo-sprites.webp) 0 0/800% 1100% no-repeat;cursor:pointer;pointer-events:auto;filter:drop-shadow(0 0 14px #0000ff8c);-webkit-tap-highlight-color:transparent}
+.mundo-sprite:focus-visible{outline:2px solid #a4a4ff;outline-offset:4px}
+.mundo-hide{position:absolute;top:2px;right:-4px;width:24px;height:24px;border:1px solid #52526b;border-radius:50%;background:#15151ef0;color:#ddd;font-size:15px;line-height:1;cursor:pointer;pointer-events:auto;opacity:0;transition:opacity .2s}
+.mundo:hover .mundo-hide,.mundo-hide:focus-visible{opacity:1}
+.mundo-bubble{position:absolute;bottom:calc(100% - 6px);right:12px;width:max-content;max-width:min(240px,calc(100vw - 32px));padding:10px 14px;border:1px solid #3a3aff;border-radius:14px 14px 4px 14px;background:#0d0d18f2;box-shadow:0 0 22px #0000ff59;color:var(--text,#f5f5f7);font:600 13px/1.4 Arial,Helvetica,sans-serif;opacity:0;transform:translateY(6px) scale(.96);transform-origin:bottom right;transition:opacity .25s,transform .25s;pointer-events:none}
+.mundo.bubble-right .mundo-bubble{right:auto;left:12px;border-radius:14px 14px 14px 4px;transform-origin:bottom left}
+.mundo.is-talking .mundo-bubble{opacity:1;transform:none}
+.mundo-call{position:fixed;right:16px;bottom:16px;z-index:90;display:flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border:1px solid #3a3aff;border-radius:999px;background:#0d0d18f2;color:var(--text,#f5f5f7);font:600 13px Arial,Helvetica,sans-serif;cursor:pointer;box-shadow:0 0 18px #0000ff4d}
+.mundo-call span{width:26px;height:28px;background:url(assets/mundo-sprites.webp) 0 0/800% 1100% no-repeat}
+.mundo-call[hidden]{display:none}
+/* No formulário, o Mundo acompanha a pessoa ao lado da janela. */
+dialog .mundo{z-index:1}
+dialog .mundo.in-corner{--mundo-w:52px;position:absolute;top:6px;right:62px;bottom:auto;left:auto;transform:none}
+dialog .mundo.in-corner .mundo-bubble{display:none}
+dialog .mundo.in-corner .mundo-hide{display:none}
+@media (max-width:700px){.mundo{--mundo-w:84px;bottom:6px}.mundo-bubble{font-size:12px;max-width:200px}}
+@media (prefers-reduced-motion:reduce){.mundo{transition:none!important}.mundo-bubble{transition:none}}
+@media print{.mundo,.mundo-call{display:none!important}}
