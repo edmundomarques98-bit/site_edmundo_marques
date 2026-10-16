@@ -18,11 +18,13 @@ body{background:#111}
 .phone .screen::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,#ffffff06 0 2px,transparent 2px 4px)}
 .phone .bar{position:absolute;left:28px;right:28px;top:22px;display:flex;justify-content:space-between;font-size:20px;color:#8fa4ff99;font-weight:700}
 .phone .lbl{position:absolute;top:70px;left:30px;right:30px;display:flex;justify-content:space-between;font-size:22px;color:#8fa4ff66;font-weight:700}
-.p1{width:560px;height:1060px;left:250px;top:-40px;transform:rotate(9deg)}
+.p1{width:520px;height:1000px;left:270px;top:40px;transform:rotate(9deg)}
 .p2{width:420px;height:840px;left:-210px;top:-160px;transform:rotate(-24deg);filter:blur(3px) brightness(.6)}
 .p3{width:420px;height:860px;right:-250px;top:-60px;transform:rotate(22deg);filter:blur(4px) brightness(.55)}
 .p4{width:480px;height:900px;left:-120px;bottom:-640px;transform:rotate(-14deg);filter:blur(5px) brightness(.5)}
 
+.phone .screen.site img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
+.phone .screen.site::before{z-index:1;background:linear-gradient(180deg,transparent 55%,#02030c99)}
 /* mao estilizada / vinheta */
 .shade{position:absolute;inset:0;background:radial-gradient(ellipse 85% 75% at 50% 48%,transparent 40%,#01020a 100%)}
 
@@ -73,7 +75,7 @@ body{background:#111}
   <div class="phone p2"><div class="screen"></div></div>
   <div class="phone p3"><div class="screen"></div></div>
   <div class="phone p4"><div class="screen"></div></div>
-  <div class="phone p1"><div class="screen"><div class="bar"><span>9:41</span><span>●●● ▮</span></div><div class="lbl"><span>Story Highlights</span><span>Edit Profile</span></div></div></div>
+  <div class="phone p1"><div class="screen site"><img src="clerileide-mobile.png" alt=""></div></div>
   <div class="shade"></div>
 
   <div class="side s-left">Você pode fazer uma promoção diferente a cada semana. Ou pode construir uma marca</div>
