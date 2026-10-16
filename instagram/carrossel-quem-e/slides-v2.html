@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:'Anton';src:url('fonts/anton.woff2') format('woff2')}
+@font-face{font-family:'Montserrat';src:url('fonts/montserrat.woff2') format('woff2');font-weight:100 900}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;font-family:'Montserrat',Arial,sans-serif;color:#fff}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse 75% 55% at 50% 42%,#2448ff 0%,#1430d6 28%,#0a1c9e 55%,#050f5c 80%,#030836 100%)}
+.slide::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 120% 90% at 50% 45%,transparent 55%,#01041f 100%);z-index:5}
+.layer{position:absolute;z-index:2}
+.floor{position:absolute;left:50%;transform:translateX(-50%);width:900px;height:200px;border-radius:50%;
+  background:radial-gradient(ellipse at center,#6f9bff88 0%,#2c55ff44 35%,transparent 70%);filter:blur(6px);z-index:1}
+.grid{position:absolute;left:-10%;right:-10%;bottom:180px;height:420px;z-index:0;opacity:.18;
+  background-image:linear-gradient(#8fb0ff 1px,transparent 1px),linear-gradient(90deg,#8fb0ff 1px,transparent 1px);background-size:70px 70px;
+  transform:perspective(600px) rotateX(62deg);transform-origin:bottom;-webkit-mask-image:linear-gradient(to top,#000,transparent)}
+.title{font-family:'Anton',Impact,sans-serif;text-transform:uppercase;line-height:.98;letter-spacing:.005em;
+  background:linear-gradient(180deg,#a9c8ff 0%,#5b8dff 55%,#3b6bff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 22px #3f74ffb3)}
+.title .w{background:linear-gradient(180deg,#ffffff 0%,#dfe8ff 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:31px;line-height:1.45;color:#c9d6ff;letter-spacing:.02em}
+.lead b{color:#fff;font-weight:700}
+.kicker{font-size:26px;letter-spacing:.08em;color:#c9d6ff}
+.kicker b{color:#fff}
+.pill{display:inline-flex;align-items:center;gap:16px;padding:18px 34px 18px 24px;border-radius:60px;
+  background:linear-gradient(180deg,#ffffff2e,#ffffff10);border:1.5px solid #ffffff55;box-shadow:inset 0 1px 0 #ffffff66,0 10px 40px #0010a066;
+  backdrop-filter:blur(8px);font-size:28px;color:#fff}
+.pill svg{width:30px;height:30px}
+.pill b{font-weight:700}
+/* rodape */
+.foot{position:absolute;left:70px;right:70px;bottom:62px;z-index:6;display:flex;align-items:center;gap:38px}
+.foot .logo{height:52px;filter:brightness(0) invert(1)}
+.foot .sep{width:1.5px;height:54px;background:#ffffff40}
+.foot .info{display:flex;align-items:center;gap:12px;font-size:19px;line-height:1.25;color:#dbe4ff}
+.foot .info small{display:block;font-size:14px;color:#9fb3ff;letter-spacing:.04em}
+.foot .info b{font-weight:700;color:#fff}
+.foot svg{width:30px;height:30px;flex-shrink:0}
+.foot .page{margin-left:auto;font-size:18px;letter-spacing:.14em;color:#9fb3ff}
+.badge{position:absolute;top:70px;left:70px;z-index:6;display:flex;align-items:center;gap:14px;font-size:20px;letter-spacing:.18em;color:#c9d6ff}
+.badge img{height:30px;filter:brightness(0) invert(1)}
+
+/* 1 */
+.s1 .globe{left:50%;top:260px;width:1000px;transform:translateX(-50%);opacity:.5;z-index:1}
+.s1 .robot{left:50%;bottom:140px;width:740px;transform:translateX(-50%);filter:drop-shadow(0 30px 50px #000a3a)}
+.s1 .floor{bottom:120px}
+.s1 .title{position:absolute;top:110px;left:0;right:0;text-align:center;font-size:138px;white-space:nowrap;z-index:3}
+.s1 .kicker{position:absolute;top:400px;left:0;right:0;text-align:center;z-index:3}
+
+/* 2 */
+.s2 .robot{left:-40px;bottom:150px;width:600px;filter:drop-shadow(0 30px 50px #000a3a)}
+.s2 .floor{left:300px;bottom:130px;width:700px}
+.s2 .title{position:absolute;right:70px;top:250px;width:470px;text-align:right;font-size:132px;z-index:3}
+.s2 .lead{position:absolute;right:70px;top:930px;width:440px;text-align:right;font-size:27px;z-index:3}
+.s2 .kicker{position:absolute;right:70px;top:150px;z-index:3}
+
+/* 3 */
+.s3 .globe{left:50%;top:420px;width:820px;transform:translateX(-50%);opacity:.55;z-index:1}
+.s3 .title{position:absolute;top:120px;left:0;right:0;text-align:center;font-size:124px;z-index:3}
+.s3 .cards{position:absolute;left:70px;right:70px;top:560px;display:grid;grid-template-columns:1fr 1fr;gap:30px;z-index:3}
+.card{border-radius:26px;padding:42px 38px 44px;min-height:520px;display:flex;flex-direction:column;
+  background:linear-gradient(160deg,#ffffff26,#ffffff08 60%);border:1.5px solid #ffffff4d;box-shadow:inset 0 1px 0 #ffffff66,0 30px 60px #00087055;backdrop-filter:blur(14px)}
+.card.on{background:linear-gradient(160deg,#4f7bff,#1d3cff 70%);border-color:#8fb0ff}
+.card .n{font-family:'Anton',sans-serif;font-size:30px;color:#9fb8ff}
+.card.on .n{color:#dbe4ff}
+.card h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:64px;line-height:1;margin:22px 0 22px;letter-spacing:.01em}
+.card p{font-size:24px;line-height:1.5;color:#d4ddff}
+.card ul{list-style:none;margin-top:auto}
+.card li{font-size:22px;padding:13px 0;border-top:1px solid #ffffff2e;display:flex;gap:12px;font-weight:700}
+.card li::before{content:'+';color:#9fb8ff}
+.card.on li::before{color:#fff}
+
+/* 4 */
+.s4 .kicker{position:absolute;top:150px;left:0;right:0;text-align:center;z-index:3}
+.s4 .title{position:absolute;top:205px;left:0;right:0;text-align:center;font-size:118px;z-index:3}
+.s4 .board{left:50%;top:470px;width:620px;height:620px;transform:translateX(-50%) perspective(1400px) rotateX(6deg);border-radius:24px;overflow:hidden;
+  border:2px solid #8fb0ff88;box-shadow:0 0 0 10px #ffffff10,0 40px 90px #000a5acc,0 0 80px #3f74ff66}
+.s4 .board img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.s4 .floor{bottom:150px}
+.s4 .lead{position:absolute;left:0;right:0;top:1158px;text-align:center;font-size:25px;z-index:3}
+
+/* 5 */
+.s5 .robot{right:-120px;bottom:140px;width:620px;filter:drop-shadow(0 30px 50px #000a3a)}
+.s5 .floor{left:720px;bottom:120px;width:700px}
+.s5 .title{position:absolute;left:70px;top:220px;width:560px;font-size:120px;z-index:3}
+.s5 .lead{position:absolute;left:70px;top:680px;width:440px;font-size:27px;z-index:3}
+.s5 .pill{position:absolute;left:70px;top:900px;z-index:3}
+.s5 .kicker{position:absolute;left:70px;top:150px;z-index:3}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3.5h3l1.5 4-2 1.3a11 11 0 0 0 7.7 7.7l1.3-2 4 1.5v3a2 2 0 0 1-2 2A17 17 0 0 1 3 5.5a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="globe" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></g></symbol>
+  <symbol id="ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></g></symbol>
+</svg>
+
+<template id="foot">
+  <img class="logo" src="../../assets/logo.png" alt="Edmundo Marques">
+  <span class="sep"></span>
+  <span class="info"><svg><use href="#phone"/></svg><span><small>WhatsApp</small><b>(88) 99624-5526</b></span></span>
+  <span class="info"><svg><use href="#ig"/></svg><span><small>Instagram</small><b>@edmundom117</b></span></span>
+</template>
+
+<section class="slide s1" id="s1">
+  <div class="grid"></div>
+  <img class="layer globe" src="../../assets/globo-holografico.webp" alt="">
+  <div class="title">O que<br><span class="w">fazemos?</span></div>
+  <div class="kicker">Design com <b>intenção</b>. Digital com <b>presença</b>.</div>
+  <div class="floor"></div>
+  <img class="layer robot" src="../../assets/robo-servicos.png" alt="">
+  <div class="foot" data-page="01 / 05"></div>
+</section>
+
+<section class="slide s2" id="s2">
+  <div class="grid"></div>
+  <div class="kicker">O <b>problema</b></div>
+  <div class="floor"></div>
+  <img class="layer robot" src="../../assets/robo.webp" alt="">
+  <div class="title">Sua marca<br><span class="w">parece</span><br>menor?</div>
+  <div class="lead">Quando a imagem não acompanha a qualidade do seu trabalho, o cliente <b>passa reto</b> e fecha com quem só parece mais profissional.</div>
+  <div class="foot" data-page="02 / 05"></div>
+</section>
+
+<section class="slide s3" id="s3">
+  <img class="layer globe" src="../../assets/globo-holografico.webp" alt="">
+  <div class="title">Duas peças.<br><span class="w">Uma presença.</span></div>
+  <div class="cards">
+    <div class="card">
+      <span class="n">01</span>
+      <h3>Identidade<br>visual</h3>
+      <p>Uma marca que faz o cliente confiar em você antes da primeira conversa.</p>
+      <ul><li>Logo e símbolo</li><li>Cores e tipografia</li><li>Aplicações</li></ul>
+    </div>
+    <div class="card on">
+      <span class="n">02</span>
+      <h3>Sites<br>e links</h3>
+      <p>Seu serviço organizado, levando quem te segue direto para o WhatsApp.</p>
+      <ul><li>Site profissional</li><li>Página de links</li><li>Pronto para celular</li></ul>
+    </div>
+  </div>
+  <div class="foot" data-page="03 / 05"></div>
+</section>
+
+<section class="slide s4" id="s4">
+  <div class="grid"></div>
+  <div class="kicker">Case <b>Nutrimax</b></div>
+  <div class="title">De mais uma marca<br><span class="w">para a marca.</span></div>
+  <div class="floor"></div>
+  <div class="layer board"><img src="../../assets/nutrimax-case-1.webp" alt=""></div>
+  <div class="lead">Um redesign que deixou a marca <b>forte, premium e fácil de reconhecer.</b></div>
+  <div class="foot" data-page="04 / 05"></div>
+</section>
+
+<section class="slide s5" id="s5">
+  <div class="grid"></div>
+  <div class="kicker">Sem <b>fila de agência</b></div>
+  <div class="title">Fale direto<br><span class="w">com quem</span><br>cria.</div>
+  <div class="lead">Cada etapa é alinhada com você antes de seguir. <b>Sem surpresas no final.</b></div>
+  <div class="pill"><svg><use href="#phone"/></svg><span>Comece seu projeto: <b>link na bio</b></span></div>
+  <div class="floor"></div>
+  <img class="layer robot" src="../../assets/robo-servicos.png" alt="">
+  <div class="foot" data-page="05 / 05"></div>
+</section>
+
+<script>
+const t=document.getElementById('foot');
+document.querySelectorAll('.foot').forEach(f=>{
+  f.appendChild(t.content.cloneNode(true));
+  const p=document.createElement('span');p.className='page';p.textContent=f.dataset.page;f.appendChild(p);
+});
+</script>
+</body>
+</html>
