@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:'EM Corte Display';src:url('../../assets/fonts/EM-Corte-Display-Bold.ttf') format('truetype');font-weight:700}
+:root{--blue:#0000ff;--bg:#09090d;--surface:#111117;--text:#f5f5f7;--muted:#a7a7b7;--line:#2b2b35;--accent:#7373ff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#222;font-family:Arial,Helvetica,sans-serif;color:var(--text)}
+.slide{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--bg);padding:96px 88px}
+.slide::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 85% 20%,#0d0d5a 0%,transparent 70%);z-index:0}
+.slide>*{position:relative;z-index:1}
+h1,h2{font-family:'EM Corte Display',Arial,sans-serif;font-weight:700;letter-spacing:-.025em;line-height:1.02}
+.eyebrow{font-size:20px;letter-spacing:.16em;font-weight:700;color:#9a9aff;display:flex;align-items:center;gap:18px}
+.eyebrow img{width:58px;background:#f5f5f7;border-radius:5px;padding:9px}
+.foot{position:absolute;left:88px;right:88px;bottom:72px;display:flex;justify-content:space-between;align-items:center;font-size:18px;letter-spacing:.12em;color:#7d7d95;z-index:2}
+.foot b{color:var(--text);font-weight:700}
+.orbit{position:absolute;border:1.5px solid #2c2c5c;border-radius:50%;z-index:0}
+p.lead{font-size:34px;line-height:1.5;color:var(--muted)}
+p.lead strong{color:var(--text);font-weight:700}
+.blue{color:var(--accent)}
+
+/* 1 capa */
+.s1 .globe{position:absolute;width:980px;right:-330px;top:-150px;opacity:.55;z-index:0}
+.s1 h1{font-size:128px;margin-top:70px}
+.s1 h1 span{color:var(--accent)}
+.s1 .robot{position:absolute;width:820px;left:280px;bottom:-40px;mix-blend-mode:lighten;z-index:1}
+.s1 .sub{font-size:30px;line-height:1.5;color:var(--muted);margin-top:36px;max-width:430px}
+.s1 .swipe{position:absolute;left:88px;bottom:150px;font-size:22px;letter-spacing:.14em;color:var(--text);display:flex;gap:16px;align-items:center;z-index:2}
+.s1 .swipe i{display:inline-block;width:64px;height:2px;background:var(--blue);box-shadow:0 0 12px var(--blue)}
+
+/* 2 dor */
+.s2 h2{font-size:96px;margin:64px 0 56px}
+.s2 h2 span{color:var(--accent)}
+.s2 .robot{position:absolute;width:440px;right:-10px;bottom:110px;mix-blend-mode:lighten}
+.s2 p.lead{max-width:560px}
+
+/* 3 servicos */
+.s3 h2{font-size:84px;margin:56px 0 64px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.card{border:1.5px solid var(--line);border-radius:18px;background:var(--surface);padding:44px 40px 48px;min-height:780px;display:flex;flex-direction:column}
+.card.web{background:var(--blue);border-color:var(--blue)}
+.card .num{font-size:22px;color:#858599}
+.card.web .num{color:#dbdbff}
+.card h3{font-family:'EM Corte Display',Arial,sans-serif;font-size:58px;line-height:1.02;margin:40px 0 26px}
+.card p{font-size:26px;line-height:1.5;color:var(--muted)}
+.card.web p{color:#dbdbff}
+.card ul{list-style:none;margin-top:auto}
+.card li{border-top:1px solid #ffffff22;padding:16px 0;font-size:24px;display:flex;gap:14px}
+.card li::before{content:'+';color:#9999ff}
+.card.web li::before{color:#fff}
+
+/* 4 case */
+.s4 h2{font-size:80px;margin:52px 0 22px}
+.s4 p.lead{font-size:30px;max-width:840px}
+.s4 .board{position:absolute;left:88px;right:88px;top:560px;height:660px;border-radius:18px;overflow:hidden;border:1.5px solid var(--line)}
+.s4 .board img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+.s4 .tag{position:absolute;left:24px;bottom:24px;background:#09090de6;border:1px solid #47475c;border-radius:30px;padding:12px 22px;font-size:20px;letter-spacing:.08em}
+
+/* 5 cta */
+.s5{background:var(--blue)}
+.s5::before{background:radial-gradient(ellipse 70% 50% at 80% 75%,#5050ff 0%,transparent 70%)}
+.s5 .eyebrow{color:#dbdbff}
+.s5 h2{font-size:104px;margin:60px 0 44px}
+.s5 h2 span{color:#b1b1ff}
+.s5 p.lead{color:#dbdbff;max-width:560px}
+.s5 p.lead strong{color:#fff}
+.s5 .robot{position:absolute;width:600px;right:-70px;bottom:120px;filter:drop-shadow(0 30px 60px #0000004d)}
+.s5 .btn{position:absolute;left:88px;bottom:190px;background:#f6f6fa;color:#0000de;border-radius:10px;padding:30px 40px;font-size:30px;font-weight:700;z-index:2}
+.s5 .link{position:absolute;left:88px;bottom:128px;font-size:22px;color:#dbdbff;letter-spacing:.04em;z-index:2}
+.s5 .foot{color:#c5c5ff}
+.s5 .foot b{color:#fff}
+.s5 .orbit{border-color:#4a4aff}
+</style>
+</head>
+<body>
+
+<section class="slide s1" id="s1">
+  <img class="globe" src="../../assets/globo-holografico.webp" alt="">
+  <div class="orbit" style="width:1300px;height:700px;left:-120px;top:520px;transform:rotate(-24deg)"></div>
+  <div class="eyebrow"><img src="../../assets/simbolo.png" alt="">DESIGN COM INTENÇÃO</div>
+  <h1>Quem é<br><span>Edmundo<br>Marques?</span></h1>
+  <p class="sub">Identidade visual e sites para marcas que querem vender mais.</p>
+  <img class="robot" src="../../assets/robo-servicos.png" alt="">
+  <div class="swipe">ARRASTA <i></i></div>
+  <div class="foot"><span><b>@edmundom117</b></span><span>01 / 05</span></div>
+</section>
+
+<section class="slide s2" id="s2">
+  <div class="orbit" style="width:900px;height:900px;right:-380px;top:380px"></div>
+  <div class="eyebrow">O PROBLEMA</div>
+  <h2>Sua marca parece <span>menor</span> do que o trabalho que você entrega?</h2>
+  <p class="lead">Quando a imagem não acompanha a qualidade, o cliente <strong>passa reto</strong> e fecha com quem só parece mais profissional.</p>
+  <img class="robot" src="../../assets/robo.webp" alt="">
+  <div class="foot"><span><b>@edmundom117</b></span><span>02 / 05</span></div>
+</section>
+
+<section class="slide s3" id="s3">
+  <div class="eyebrow">O QUE EU FAÇO</div>
+  <h2>Duas peças.<br><span class="blue">Uma presença.</span></h2>
+  <div class="cards">
+    <div class="card">
+      <span class="num">01</span>
+      <h3>Identidade visual</h3>
+      <p>Uma marca que faz o cliente confiar em você antes da primeira conversa.</p>
+      <ul><li>Logo e símbolo</li><li>Cores e tipografia</li><li>Aplicações</li></ul>
+    </div>
+    <div class="card web">
+      <span class="num">02</span>
+      <h3>Sites</h3>
+      <p>Seu serviço organizado, levando quem te segue direto para o WhatsApp.</p>
+      <ul><li>Site profissional</li><li>Página de links</li><li>Pronto para celular</li></ul>
+    </div>
+  </div>
+  <div class="foot"><span><b>@edmundom117</b></span><span>03 / 05</span></div>
+</section>
+
+<section class="slide s4" id="s4">
+  <div class="eyebrow">CASE NUTRIMAX</div>
+  <h2>De mais uma marca <span class="blue">para a marca.</span></h2>
+  <p class="lead">A Nutrimax se perdia entre marcas parecidas. Com o redesign, virou <strong>forte, premium e fácil de reconhecer.</strong></p>
+  <div class="board"><img src="../../assets/nutrimax-case-1.webp" alt=""><span class="tag">ANTES → DEPOIS</span></div>
+  <div class="foot"><span><b>@edmundom117</b></span><span>04 / 05</span></div>
+</section>
+
+<section class="slide s5" id="s5">
+  <div class="orbit" style="width:1100px;height:600px;left:-200px;top:640px;transform:rotate(-20deg)"></div>
+  <div class="eyebrow">SEM FILA DE AGÊNCIA</div>
+  <h2>Você fala direto com <span>quem cria.</span></h2>
+  <p class="lead">Cada etapa é alinhada com você antes de seguir. <strong>Sem surpresas no final.</strong></p>
+  <img class="robot" src="../../assets/robo-servicos.png" alt="">
+  <div class="btn">Começar meu projeto →</div>
+  <div class="link">Link na bio</div>
+  <div class="foot"><span><b>@edmundom117</b></span><span>05 / 05</span></div>
+</section>
+
+</body>
+</html>
