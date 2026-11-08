@@ -192,7 +192,7 @@ const P={
   <div class="block" style="top:380px;width:600px">
     <div class="bar"></div>
     <h1 style="font-size:96px">Marketing<br>com <span class="acc">direção.</span></h1>
-    <p class="sub" style="width:520px">Do planejamento à execução: <strong>identidade, conteúdo e site</strong> trabalhando juntos para gerar resultado real.</p>
+    <p class="sub" style="width:470px">Do planejamento à execução: <strong>identidade, conteúdo e site</strong> trabalhando juntos para gerar resultado real.</p>
     ${cta('Fale com <b>a gente</b>')}
   </div>${foot}`},
 
@@ -223,6 +223,83 @@ const P={
   </div>${foot}`},
 };
 
+
+const DEFS=`<defs>
+ <radialGradient id="gBlue" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#6f8fff"/><stop offset=".45" stop-color="#1a2cff"/><stop offset="1" stop-color="#05087a"/></radialGradient>
+ <radialGradient id="gWhite" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#cfd9ff"/><stop offset="1" stop-color="#7f93d6"/></radialGradient>
+ <linearGradient id="gGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".35"/><stop offset="1" stop-color="#ffffff" stop-opacity=".04"/></linearGradient>
+ <linearGradient id="gMetal" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8eeff"/><stop offset=".5" stop-color="#8fa4e8"/><stop offset="1" stop-color="#2a3a9a"/></linearGradient>
+ <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+ <filter id="soft"><feGaussianBlur stdDeviation="40"/></filter>
+ <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="30" stdDeviation="30" flood-color="#000" flood-opacity=".7"/></filter>
+</defs>`;
+const svg=(inner)=>`<svg viewBox="0 0 1080 1440" width="1080" height="1440" style="position:absolute;inset:0;z-index:2">${DEFS}${inner}</svg>`;
+const ART={
+alvo:svg(`
+ <ellipse cx="540" cy="1080" rx="520" ry="300" fill="#0000ff" opacity=".55" filter="url(#soft)"/>
+ <g filter="url(#shadow)" transform="translate(540 1040)">
+  <ellipse rx="330" ry="330" fill="#0a0f5a"/>
+  <circle r="320" fill="url(#gBlue)"/><circle r="262" fill="url(#gWhite)"/>
+  <circle r="204" fill="url(#gBlue)"/><circle r="146" fill="url(#gWhite)"/>
+  <circle r="88" fill="url(#gBlue)"/><circle r="34" fill="#fff" filter="url(#glow)"/>
+  <circle r="320" fill="none" stroke="#9fb7ff" stroke-width="3" opacity=".7"/>
+  <path d="M-300 -150 A330 330 0 0 1 150 -300" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none" opacity=".35"/>
+ </g>
+ <g transform="translate(540 1040) rotate(-28)">
+  <rect x="0" y="-7" width="330" height="14" rx="7" fill="url(#gMetal)" filter="url(#shadow)"/>
+  <path d="M0 0 L46 -22 L46 22 Z" fill="#e8eeff"/>
+  <path d="M280 -7 L340 -46 L370 -46 L320 0 L370 46 L340 46 L280 7 Z" fill="#8fb0ff" filter="url(#glow)"/>
+ </g>
+ <circle cx="540" cy="1040" r="380" fill="none" stroke="#8fb0ff" stroke-width="2" stroke-dasharray="4 14" opacity=".5"/>
+`),
+dinheiro:svg(`
+ <ellipse cx="860" cy="760" rx="380" ry="520" fill="#0000ff" opacity=".6" filter="url(#soft)"/>
+ <path d="M640 430 L760 560 L840 500 L960 760 L1040 700 L1110 980" stroke="#8fb0ff" stroke-width="10" fill="none" stroke-linejoin="round" stroke-linecap="round" filter="url(#glow)"/>
+ <path d="M1110 980 l-60 -10 m60 10 l10 -60" stroke="#8fb0ff" stroke-width="10" stroke-linecap="round" filter="url(#glow)"/>
+ ${[[820,620,-18,1],[930,900,24,.95],[760,1010,-8,.85],[1000,1160,14,.8],[860,1250,-30,.7]].map(([x,y,r,o])=>`
+ <g transform="translate(${x} ${y}) rotate(${r})" opacity="${o}" filter="url(#shadow)">
+  <rect x="-150" y="-78" width="300" height="156" rx="18" fill="url(#gBlue)" stroke="#9fb7ff" stroke-width="3"/>
+  <rect x="-128" y="-56" width="256" height="112" rx="10" fill="none" stroke="#cfd9ff" stroke-width="2" opacity=".6"/>
+  <circle r="40" fill="none" stroke="#fff" stroke-width="4" opacity=".85"/>
+  <text y="16" text-anchor="middle" font-family="EMCorte" font-size="48" fill="#fff">$</text>
+ </g>`).join('')}
+ ${[[1040,430,40],[1010,560,30],[660,1180,38]].map(([x,y,r])=>`
+ <g filter="url(#shadow)"><ellipse cx="${x}" cy="${y+10}" rx="${r}" ry="${r*.98}" fill="#1a2370"/><circle cx="${x}" cy="${y}" r="${r}" fill="url(#gMetal)"/><circle cx="${x}" cy="${y}" r="${r*.7}" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/></g>`).join('')}
+`),
+bussola:svg(`
+ <ellipse cx="820" cy="820" rx="420" ry="460" fill="#0000ff" opacity=".65" filter="url(#soft)"/>
+ <g transform="translate(905 840) scale(.82)">
+  <g filter="url(#shadow)">
+   <circle r="330" fill="url(#gMetal)"/><circle r="300" fill="#05072e"/><circle r="300" fill="url(#gGlass)"/>
+  </g>
+  ${Array.from({length:72},(_,i)=>{const a=i*5*Math.PI/180,l=i%18==0?34:i%6==0?20:10;return `<line x1="${Math.sin(a)*282}" y1="${-Math.cos(a)*282}" x2="${Math.sin(a)*(282-l)}" y2="${-Math.cos(a)*(282-l)}" stroke="#cfd9ff" stroke-width="${i%18==0?5:2}" opacity=".85"/>`}).join('')}
+  ${[['N',0],['L',90],['S',180],['O',270]].map(([t,d])=>{const a=d*Math.PI/180;return `<text x="${Math.sin(a)*215}" y="${-Math.cos(a)*215+20}" text-anchor="middle" font-family="EMCorte" font-size="56" fill="${t=='N'?'#8fb0ff':'#fff'}">${t}</text>`}).join('')}
+  <circle r="150" fill="none" stroke="#8fb0ff" stroke-width="2" stroke-dasharray="3 10" opacity=".6"/>
+  <g transform="rotate(32)" filter="url(#glow)">
+   <path d="M0 -190 L36 0 L-36 0 Z" fill="#8fb0ff"/><path d="M0 -190 L36 0 L0 0 Z" fill="#2f5bff"/>
+   <path d="M0 190 L36 0 L-36 0 Z" fill="#e8eeff"/><path d="M0 190 L-36 0 L0 0 Z" fill="#9aa6c8"/>
+  </g>
+  <circle r="22" fill="url(#gMetal)"/><circle r="8" fill="#05072e"/>
+  <path d="M-250 -150 A290 290 0 0 1 60 -296" stroke="#fff" stroke-width="10" stroke-linecap="round" fill="none" opacity=".3"/>
+  <circle r="340" fill="none" stroke="#8fb0ff" stroke-width="2" opacity=".5"/>
+  <ellipse rx="420" ry="120" fill="none" stroke="#8fb0ff" stroke-width="2" opacity=".35" transform="rotate(-20)"/>
+ </g>
+`),
+puzzle:(()=>{
+ const A='M0 0 H70 C70 -40 130 -40 130 0 H200 V70 C240 70 240 130 200 130 V200 H0 Z';
+ const B='M0 0 H200 V200 H0 V130 C40 130 40 70 0 70 Z';
+ const C='M0 0 H70 C70 40 130 40 130 0 H200 V200 H0 Z';
+ const piece=(d,x,y,r,fill,extra='')=>`<g transform="translate(${x} ${y}) rotate(${r}) scale(1.15)" filter="url(#shadow)" ${extra}><path d="${d}" fill="${fill}" stroke="#9fb7ff" stroke-width="2.5"/><path d="${d}" fill="url(#gGlass)"/></g>`;
+ return svg(`
+ <ellipse cx="540" cy="420" rx="520" ry="360" fill="#0000ff" opacity=".6" filter="url(#soft)"/>
+ ${piece(A,250,200,-6,'url(#gBlue)')}
+ ${piece(B,520,175,0,'url(#gWhite)')}
+ ${piece(C,290,440,8,'url(#gWhite)')}
+ <g filter="url(#glow)">${piece(B,630,420,14,'url(#gBlue)')}</g>
+ <path d="M540 700 C 600 660 640 640 690 640" stroke="#8fb0ff" stroke-width="4" stroke-dasharray="2 12" stroke-linecap="round" fill="none"/>
+ `);})(),
+};
+
 const q=new URLSearchParams(location.search);
 const root=document.getElementById('root');
 const mode=q.get('mode')||'final'; // final | overlay | preview
@@ -231,8 +308,8 @@ if(list.length>1){document.body.classList.add('preview');document.body.style.zoo
 for(const n of list){
   const d=P[n];const s=document.createElement('section');
   s.className='post'+(d.photo?' photo':'');s.id='p'+n;
-  if(d.photo && mode!=='overlay'){s.classList.add('withbg');s.style.backgroundImage=`url(prev/${d.photo}.png)`}
-  s.innerHTML=d.html;root.appendChild(s);
+  if(d.photo && mode==='final'){s.classList.add('withbg');s.style.backgroundImage=`url(prev/${d.photo}.png)`}
+  if(d.photo && mode==='vector'){s.className='post';s.innerHTML=grain+ART[d.photo]+d.html}else s.innerHTML=d.html;root.appendChild(s);
 }
 </script>
 </body>
