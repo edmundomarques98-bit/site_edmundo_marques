@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face{font-family:'EMCorte';src:url('fonts/emcorte.ttf') format('truetype')}
+@font-face{font-family:'Montserrat';src:url('fonts/montserrat.woff2') format('woff2');font-weight:100 900}
+:root{--azul:#0000ff;--azul2:#2f5bff;--claro:#8fb0ff;--texto:#dbe4ff;--fundo:#03041a}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+body.preview{background:#111;display:flex;flex-wrap:wrap;gap:20px;padding:20px}
+.post{width:1080px;height:1440px;position:relative;overflow:hidden;font-family:'Montserrat',Arial,sans-serif;color:#fff;
+  background:radial-gradient(ellipse 80% 55% at 85% 8%,#0000ffaa 0%,#0000ff00 70%),radial-gradient(ellipse 70% 50% at 0% 100%,#1b2dff55 0%,#0000ff00 70%),linear-gradient(180deg,#05072e 0%,#03041a 60%,#02030f 100%)}
+.post.photo{background:transparent}
+.post.photo.withbg{background-size:cover;background-position:center}
+.grain{position:absolute;inset:0;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")}
+.photo .grain{display:none}
+
+/* topo */
+.top{position:absolute;top:60px;left:76px;right:76px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.top .mark{height:38px}
+.top .handle{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:600;color:var(--texto);letter-spacing:.02em}
+.top .handle svg{width:24px;height:24px;color:var(--claro)}
+.top .tag{font-size:16px;font-weight:700;letter-spacing:.3em;color:var(--claro);border:1.5px solid #4f78ff88;border-radius:40px;padding:10px 22px 9px;background:#02030c66}
+
+/* texto */
+.block{position:absolute;left:76px;z-index:4}
+h1{font-family:'EMCorte',sans-serif;font-weight:400;text-transform:uppercase;line-height:1.02;font-size:104px;letter-spacing:.005em;text-shadow:0 6px 30px #000a}
+h1 .acc{color:var(--claro);text-shadow:0 0 28px #2f5bffcc}
+.bar{width:110px;height:6px;background:var(--azul);box-shadow:0 0 18px #2f5bff;margin-bottom:34px;clip-path:polygon(0 0,100% 0,88% 100%,0 100%)}
+.sub{font-size:31px;line-height:1.42;color:var(--texto);font-weight:500;margin-top:34px}
+.sub strong{color:#fff;font-weight:700}
+.cta{display:inline-flex;align-items:center;gap:16px;margin-top:40px;padding:16px 30px 16px 18px;border-radius:60px;background:#ffffff14;border:1.5px solid #ffffff2e;backdrop-filter:blur(10px);font-size:24px;font-weight:600;color:#fff}
+.cta i{width:40px;height:40px;border-radius:50%;background:var(--azul);box-shadow:0 0 18px #2f5bffcc;display:grid;place-items:center;font-style:normal}
+.cta i svg{width:20px;height:20px}
+.cta b{color:var(--claro)}
+
+/* rodape */
+.foot{position:absolute;left:76px;right:76px;bottom:62px;display:flex;align-items:center;gap:32px;z-index:5}
+.foot .logo{height:58px}
+.foot .sep{width:1.5px;height:50px;background:#ffffff40}
+.foot .info{display:flex;align-items:center;gap:12px;font-size:20px;line-height:1.25;color:var(--texto)}
+.foot .info small{display:block;font-size:14px;color:var(--claro);letter-spacing:.04em}
+.foot .info b{color:#fff}
+.foot svg{width:28px;height:28px;color:var(--claro)}
+.fadebot{position:absolute;left:0;right:0;bottom:0;height:300px;background:linear-gradient(180deg,#02030f00,#02030fe6 65%,#02030f);z-index:3}
+.fadetop{position:absolute;left:0;right:0;top:0;height:62%;background:linear-gradient(0deg,#02030f00 0%,#02030fb0 35%,#02030ff2 100%);z-index:3}
+.fadeleft{position:absolute;top:0;bottom:0;left:0;width:72%;background:linear-gradient(90deg,#02030ff2 0%,#02030fc0 50%,#02030f00 100%);z-index:3}
+
+/* telefone */
+.phone{position:absolute;border-radius:64px;background:#05061a;border:14px solid #15172b;box-shadow:0 0 0 2px #3a3f63,0 40px 90px #000c,0 0 80px #0000ff55;overflow:hidden}
+.phone:before{content:'';position:absolute;top:18px;left:50%;transform:translateX(-50%);width:120px;height:32px;border-radius:20px;background:#000;z-index:3}
+.phone.ghost{filter:blur(5px);opacity:.55}
+.screen{position:absolute;inset:0;padding:96px 44px 40px}
+.glass{background:linear-gradient(145deg,#ffffff1f,#ffffff08);border:1.5px solid #ffffff26;border-radius:28px;backdrop-filter:blur(14px)}
+.av{width:64px;height:64px;border-radius:50%;background:var(--azul);display:grid;place-items:center;box-shadow:0 0 20px #2f5bff99}
+.av img{width:40px}
+.glow{position:absolute;border-radius:50%;filter:blur(80px);z-index:0}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="phoneic" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 3.5h3l1.5 4-2 1.3a11 11 0 0 0 7.7 7.7l1.3-2 4 1.5v3a2 2 0 0 1-2 2A17 17 0 0 1 3 5.5a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></g></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" d="M7 7l10 10M17 8v9H8"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+</svg>
+<div id="root"></div>
+<script>
+const LOGO='img/logo.svg', SIMB='img/simbolo.svg';
+const top_=(tag)=>`<div class="top"><img class="mark" src="${SIMB}" alt="">${tag?`<span class="tag">${tag}</span>`:`<span class="handle"><svg><use href="#ig"/></svg>@edmundom117</span>`}</div>`;
+const foot=`<div class="foot"><img class="logo" src="${LOGO}" alt="Edmundo Marques"><span class="sep"></span>
+  <span class="info"><svg><use href="#phoneic"/></svg><span><small>WhatsApp</small><b>(88) 99624-5526</b></span></span>
+  <span class="info"><svg><use href="#ig"/></svg><span><small>Instagram</small><b>@edmundom117</b></span></span></div>`;
+const cta=(t)=>`<div class="cta"><i><svg><use href="#arrow"/></svg></i><span>${t}</span></div>`;
+const grain='<div class="grain"></div>';
+
+const P={
+// 1 Invisibilidade
+1:{html:`${grain}
+  <div class="glow" style="width:700px;height:700px;right:-120px;top:280px;background:#0000ff"></div>
+  <img src="img/mundo.png" style="position:absolute;right:-200px;bottom:170px;height:1000px;z-index:2;filter:drop-shadow(0 30px 60px #000c)">
+  <div class="fadebot"></div>
+  ${top_()}
+  <div class="block" style="top:230px;width:640px">
+    <div class="bar"></div>
+    <h1 style="font-size:92px">Quem não<br>é visto,<br><span class="acc">não é<br>escolhido.</span></h1>
+    <p class="sub" style="width:520px">No digital, presença é <strong>o primeiro passo da venda.</strong></p>
+    ${cta('Apareça do <b>jeito certo</b>')}
+  </div>${foot}`},
+
+// 2 Perfil bonito sem vendas
+2:{html:`${grain}
+  <div class="phone ghost" style="left:-230px;top:330px;width:380px;height:780px"></div>
+  <div class="phone ghost" style="right:-230px;top:330px;width:380px;height:780px"></div>
+  <div class="glow" style="width:600px;height:600px;left:240px;top:420px;background:#0000ff;opacity:.7"></div>
+  <div class="phone" style="left:255px;top:210px;width:570px;height:1000px">
+    <div class="screen" style="padding:130px 48px 40px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:60px"><div class="av"><img src="${SIMB}"></div>
+        <div><div style="font-weight:700;font-size:22px">Sua marca</div><div style="font-size:17px;color:#9fb3ff">@seuperfil</div></div></div>
+      <h1 style="font-size:74px;line-height:1.05">Instagram não é vitrine.</h1>
+      <div style="font-family:EMCorte;text-transform:uppercase;font-size:50px;color:var(--claro);margin-top:20px;text-shadow:0 0 22px #2f5bffcc">É canal de vendas.</div>
+      <p style="font-size:25px;line-height:1.5;color:var(--texto);margin-top:40px">Perfil bonito chama atenção. <b style="color:#fff">Perfil com estratégia</b> leva o cliente do post até a conversa no WhatsApp.</p>
+      <div style="margin-top:56px;display:flex;align-items:center;gap:12px;padding:20px 26px;border-radius:18px;background:var(--azul);box-shadow:0 0 24px #2f5bffaa;font-weight:700;font-size:21px;width:max-content"><svg style="width:22px;height:22px;color:#fff"><use href="#phoneic"/></svg>Chamar no WhatsApp</div>
+    </div>
+  </div>
+  <div class="fadebot" style="height:220px"></div>
+  ${top_()}${foot}`},
+
+// 3 Frase
+3:{html:`${grain}
+  <div class="glow" style="width:800px;height:600px;left:140px;top:420px;background:#0000ff;opacity:.45"></div>
+  ${top_()}
+  <div class="block" style="top:330px;right:76px">
+    <div style="font-family:EMCorte;font-size:300px;line-height:.7;color:var(--azul2);text-shadow:0 0 40px #2f5bff">“</div>
+    <p style="font-size:66px;line-height:1.22;font-weight:600;letter-spacing:-.01em;margin-top:10px">Cliente não compra o que você faz. <span style="color:var(--claro);font-weight:800">Compra o problema que você resolve.</span></p>
+    <div style="display:flex;align-items:center;gap:18px;margin-top:56px"><div class="bar" style="margin:0;width:70px"></div><span style="font-size:26px;font-weight:700;letter-spacing:.06em">Edmundo Marques</span></div>
+  </div>${foot}`},
+
+// 4 Confiança
+4:{html:`${grain}
+  <div class="glow" style="width:700px;height:700px;left:190px;top:380px;background:#0000ff;opacity:.6"></div>
+  <div class="phone" style="left:205px;top:170px;width:670px;height:1060px">
+    <div class="screen" style="padding:110px 46px">
+      <h1 style="font-size:62px;text-align:center;line-height:1.08">Seu cliente<br>pesquisa <span class="acc">antes<br>de comprar.</span></h1>
+      <p style="text-align:center;font-size:23px;color:var(--texto);margin:28px 0 48px;line-height:1.45">O que ele encontra decide se ele chama você ou o concorrente.</p>
+      ${[['Site profissional','Mostra quem você é, o que faz e como contratar.'],['Perfil organizado','Destaques, bio e posts que respondem dúvidas.'],['Contato em um toque','WhatsApp sempre à mão, do post ao site.']].map(([t,d])=>`
+      <div class="glass" style="display:flex;gap:22px;align-items:center;padding:32px 30px;margin-bottom:24px">
+        <div class="av" style="width:56px;height:56px;flex:none"><svg style="width:26px;height:26px"><use href="#check"/></svg></div>
+        <div><div style="font-weight:700;font-size:28px;color:var(--claro)">${t}</div><div style="font-size:21px;color:var(--texto);margin-top:6px;line-height:1.4">${d}</div></div></div>`).join('')}
+    </div>
+  </div>
+  <div class="fadebot" style="height:230px"></div>
+  ${top_()}${foot}`},
+
+// 5 Alcance
+5:{html:`${grain}
+  <div class="glow" style="width:600px;height:700px;right:-100px;top:300px;background:#0000ff;opacity:.7"></div>
+  <div class="phone" style="right:-60px;top:330px;width:480px;height:920px;transform:rotate(9deg)">
+    <div class="screen" style="padding:100px 36px">
+      <div style="font-weight:700;font-size:24px">Insights</div>
+      <div style="font-size:16px;color:#9fb3ff;margin:6px 0 30px">Contas alcançadas</div>
+      <div class="glass" style="padding:30px 24px;height:330px;display:flex;align-items:flex-end;gap:14px">
+        ${[22,30,26,38,34,52,48,66,74,88].map((h,i)=>`<div style="flex:1;height:${h}%;border-radius:8px 8px 3px 3px;background:${i>6?'linear-gradient(180deg,#8fb0ff,#0000ff)':'#ffffff2e'};${i>6?'box-shadow:0 0 18px #2f5bffaa':''}"></div>`).join('')}
+      </div>
+      ${['Seguidores','Não seguidores'].map((t,i)=>`<div class="glass" style="margin-top:20px;padding:22px 24px"><div style="font-size:16px;color:#9fb3ff">${t}</div><div style="height:10px;border-radius:6px;background:#ffffff1f;margin-top:12px"><div style="height:100%;width:${i?72:48}%;border-radius:6px;background:var(--azul2)"></div></div></div>`).join('')}
+    </div>
+  </div>
+  ${top_()}
+  <div class="block" style="top:250px;width:600px">
+    <div class="bar"></div>
+    <h1 style="font-size:96px">Alcance<br>não acontece<br><span class="acc">sozinho.</span></h1>
+    <p class="sub" style="width:520px">Impulsionar sem estratégia é <strong>pagar para ser ignorado.</strong></p>
+    ${cta('Fale com <b>a gente</b>')}
+  </div>${foot}`},
+
+// 6 Público errado (fundo IA: alvo)
+6:{photo:'alvo',html:`<div class="fadetop" style="height:66%"></div><div class="fadebot" style="height:220px"></div>
+  ${top_()}
+  <div class="block" style="top:230px;right:76px">
+    <div class="bar"></div>
+    <h1 style="font-size:96px">Falar com<br>todo mundo<br>é <span class="acc">não falar<br>com ninguém.</span></h1>
+    <p class="sub" style="width:700px">Defina quem é o seu cliente e <strong>fale direto com ele.</strong></p>
+  </div>${foot}`},
+
+// 7 Dinheiro perdido (fundo IA: notas queimando)
+7:{photo:'dinheiro',html:`<div class="fadeleft"></div><div class="fadebot" style="height:220px"></div>
+  ${top_()}
+  <div class="block" style="top:230px;width:650px">
+    <div class="bar"></div>
+    <h1 style="font-size:82px">Quanto<br>dinheiro você<br><span class="acc">ainda vai<br>perder</span> com<br>anúncio sem<br>estratégia?</h1>
+    <p class="sub" style="width:560px">Antes de impulsionar, organize <strong>perfil, oferta e site.</strong></p>
+    ${cta('Fale com <b>a gente</b>')}
+  </div>${foot}`},
+
+// 8 Conteúdo que não vende
+8:{html:`${grain}
+  <div class="glow" style="width:700px;height:500px;left:190px;top:470px;background:#0000ff;opacity:.55"></div>
+  ${top_()}
+  <div class="glass" style="position:absolute;left:110px;right:110px;top:300px;padding:56px 54px 60px;border-radius:40px;z-index:4">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:46px">
+      <div style="display:flex;align-items:center;gap:18px"><div class="av"><img src="${SIMB}"></div><div><div style="font-weight:700;font-size:24px">Sua marca</div><div style="font-size:18px;color:#9fb3ff">@seuperfil</div></div></div>
+      <div style="font-size:40px;letter-spacing:4px;color:#ffffff80;line-height:0">•••</div></div>
+    <h1 style="font-size:70px;line-height:1.1">Se o seu conteúdo <span class="acc">não gera vendas,</span> o problema pode não ser o produto.</h1>
+    <p class="sub" style="font-size:27px">Sem estratégia, conteúdo vira só presença. <strong>Com estratégia, vira venda.</strong></p>
+    ${cta('Descubra <b>o que ajustar</b>')}
+  </div>${foot}`},
+
+// 9 Falta de direção (fundo IA: bussola)
+9:{photo:'bussola',html:`<div class="fadeleft" style="width:66%"></div><div class="fadebot" style="height:220px"></div>
+  ${top_()}
+  <div class="block" style="top:380px;width:600px">
+    <div class="bar"></div>
+    <h1 style="font-size:96px">Marketing<br>com <span class="acc">direção.</span></h1>
+    <p class="sub" style="width:520px">Do planejamento à execução: <strong>identidade, conteúdo e site</strong> trabalhando juntos para gerar resultado real.</p>
+    ${cta('Fale com <b>a gente</b>')}
+  </div>${foot}`},
+
+// 10 Sem conexao (fundo IA: quebra-cabeca)
+10:{photo:'puzzle',html:`<div class="fadebot" style="height:62%;background:linear-gradient(180deg,#02030f00,#02030fcc 35%,#02030f 75%)"></div>
+  ${top_()}
+  <div class="block" style="bottom:200px;right:76px">
+    <div class="bar"></div>
+    <h1 style="font-size:96px">Sem <span class="acc">conexão,</span><br>não há resultado.</h1>
+    <p class="sub" style="width:820px">Marca, conteúdo e site precisam se encaixar. <strong>Quando cada parte cumpre seu papel, o cliente chega.</strong></p>
+    ${cta('Conecte sua <b>estratégia</b>')}
+  </div>`+'<div style="position:absolute;bottom:0;left:0;right:0">'+foot+'</div>'},
+
+// 11 Servicos
+11:{html:`${grain}
+  <div class="glow" style="width:620px;height:760px;right:-160px;top:420px;background:#0000ff;opacity:.75"></div>
+  <img src="img/mundo.png" style="position:absolute;right:-230px;bottom:150px;height:800px;z-index:2;filter:drop-shadow(0 30px 60px #000c)">
+  <div class="fadebot" style="height:200px"></div>
+  ${top_()}
+  <div class="block" style="top:220px;width:660px">
+    <div class="bar"></div>
+    <h1 style="font-size:92px">Conheça<br>nossos <span class="acc">serviços.</span></h1>
+    <p class="sub" style="margin-top:24px">Tudo conectado para você <strong>vender mais.</strong></p>
+    <div style="margin-top:44px;display:flex;flex-direction:column;gap:18px;width:560px">
+      ${['Sites profissionais','Identidade visual','Posts para redes sociais','Vídeos e reels'].map((t,i)=>`<div class="glass" style="display:flex;align-items:center;gap:20px;padding:22px 26px;border-radius:22px"><span style="font-family:EMCorte;font-size:30px;color:var(--claro);width:44px">0${i+1}</span><span style="font-size:27px;font-weight:600">${t}</span></div>`).join('')}
+    </div>
+    ${cta('Peça seu <b>orçamento</b>')}
+  </div>${foot}`},
+};
+
+const q=new URLSearchParams(location.search);
+const root=document.getElementById('root');
+const mode=q.get('mode')||'final'; // final | overlay | preview
+const list=q.get('n')?[+q.get('n')]:Object.keys(P).map(Number);
+if(list.length>1){document.body.classList.add('preview');document.body.style.zoom=.3}
+for(const n of list){
+  const d=P[n];const s=document.createElement('section');
+  s.className='post'+(d.photo?' photo':'');s.id='p'+n;
+  if(d.photo && mode!=='overlay'){s.classList.add('withbg');s.style.backgroundImage=`url(prev/${d.photo}.png)`}
+  s.innerHTML=d.html;root.appendChild(s);
+}
+</script>
+</body>
+</html>
